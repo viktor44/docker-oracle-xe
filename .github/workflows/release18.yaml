@@ -31,7 +31,7 @@ jobs:
 
       - name: Prepare
         run: |
-          # sudo apt-get buildah
+          sudo apt-get buildah
           wget --no-verbose --progress=bar:force:noscroll https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
 
       - name: Extract metadata (tags, labels) for Docker
@@ -41,6 +41,10 @@ jobs:
           images: viktor44/oracle-xe
           tags: |
             type=semver,pattern={{version}}
+
+      - name: Build
+        run: |
+          ./buildContainerImage.sh -i -s
 
       # - name: Build and push Docker image
       #   uses: docker/build-push-action@v5
