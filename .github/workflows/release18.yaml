@@ -3,7 +3,7 @@ name: Publish Docker image
 on:
   push:
     tags:
-      - 'v18*'
+      - 'v*'
 
 jobs:
   push_to_registry:
@@ -31,7 +31,7 @@ jobs:
 
       - name: Prepare
         run: |
-          # apt-get buildah
+          # sudo apt-get buildah
           wget https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
 
       - name: Extract metadata (tags, labels) for Docker
