@@ -22,7 +22,7 @@
 # Great explanation on https://vaneyckt.io/posts/safer_bash_scripts_with_set_euxo_pipefail/
 set -Eeuo pipefail
 
-VERSION="18.4.0"
+VERSION="21.3.0"
 FLAVOR="REGULAR"
 IMAGE_NAME="viktor44/oracle-xe"
 SKIP_CHECKSUM="false"

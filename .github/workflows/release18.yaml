@@ -7,7 +7,7 @@ on:
 
 jobs:
   push_to_registry:
-    name: Push Docker image to Docker Hub
+    name: Build Oracle XE 18
     runs-on: ubuntu-latest
     environment: Release
     steps:
@@ -19,19 +19,12 @@ jobs:
       #     GITHUB_VAR: ${{ toJson(github) }}
       #   run: echo "$GITHUB_VAR"
 
-      # - name: Exit if not on main branch
-      #   if: endsWith(github.event.base_ref, 'main') == false
-      #   run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
-      # - name: Log in to Docker Hub
-      #   uses: docker/login-action@v3
-      #   with:
-      #     username: ${{ vars.DOCKER_USERNAME }}
-      #     password: ${{ secrets.DOCKER_TOKEN }}
-
-      - name: Prepare
+      - name: Download Oracle RPM
         run: |
-          sudo apt-get install -y buildah
           wget --no-verbose --progress=bar:force:noscroll https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
 
       - name: Extract metadata (tags, labels) for Docker
@@ -42,16 +35,14 @@ jobs:
           tags: |
             type=semver,pattern={{version}}
 
-      - name: Build
+      - name: Build image
         run: |
-          ./buildContainerImage.sh -i -s
+          ./buildContainerImage.sh -i -v 18.4.0
 
-      # - name: Build and push Docker image
-      #   uses: docker/build-push-action@v5
-      #   with:
-      #     context: .
-      #     file: ./Dockerfile
-      #     push: true
-      #     tags: ${{ steps.meta.outputs.tags }}
-      #     labels: ${{ steps.meta.outputs.labels }}
- 
+      - name: Publish to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+        run: | 
+          docker push viktor44/oracle-xe:18.4.0

@@ -31,7 +31,7 @@ echo "BUILDER: BUILD_MODE=${BUILD_MODE}"
 
 # Set data file sizes
 CDB_SYSAUX_SIZE=480
-PDB_SYSAUX_SIZE=400    #342
+PDB_SYSAUX_SIZE=342
 CDB_SYSTEM_SIZE=840
 PDB_SYSTEM_SIZE=255
 if [ "${BUILD_MODE}" == "REGULAR" ]; then
@@ -42,8 +42,8 @@ if [ "${BUILD_MODE}" == "REGULAR" ]; then
 elif [ "${BUILD_MODE}" == "SLIM" ]; then
   REDO_SIZE=10
   USERS_SIZE=2
-  CDB_TEMP_SIZE=16
-  CDB_SYSAUX_SIZE=480
+  CDB_TEMP_SIZE=2
+#  CDB_SYSAUX_SIZE=464
 fi;
 
 echo "BUILDER: Installing OS dependencies"
