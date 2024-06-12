@@ -46,4 +46,5 @@ jobs:
           password: ${{ secrets.DOCKER_TOKEN }}
       - name: Push
         run: | 
+          docker tag localhost/viktor44/oracle-xe:18.4.0 viktor44/oracle-xe:18.4.0
           docker push viktor44/oracle-xe:18.4.0
