@@ -45,7 +45,7 @@ jobs:
         run: |
           ./buildContainerImage.sh -i -v 18.4.0
           docker images
-#          docker push viktor44/oracle-xe:18.4.0
+          docker push viktor44/oracle-xe:18.4.0
 
 #      - name: Push
 #        run: | 
