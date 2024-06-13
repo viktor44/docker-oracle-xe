@@ -396,7 +396,7 @@ if healthcheck.sh "${ORACLE_SID}"; then
     # Should not happen unless script logic changes
     else
       echo "SCRIPT ERROR: Unspecified password!"
-      echo "Please report a bug at https://github.com/gvenzl/oci-oracle-xe/issues with your environment details."
+      echo "Please report a bug at https://github.com/viktor44/docker-oracle-xe/issues with your environment details."
       exit 1;
     fi;
 
@@ -406,7 +406,7 @@ if healthcheck.sh "${ORACLE_SID}"; then
       create_database
       if ! healthcheck.sh "${ORACLE_DATABASE}"; then
          echo "CONTAINER: application database not ready for service, aborting!"
-         echo "Please report a bug at https://github.com/gvenzl/oci-oracle-xe/issues with your environment details."
+         echo "Please report a bug at https://github.com/viktor44/docker-oracle-xe/issues with your environment details."
          exit 1;
       fi;
     fi;
@@ -446,14 +446,6 @@ if healthcheck.sh "${ORACLE_SID}"; then
   echo "#########################"
   echo "DATABASE IS READY TO USE!"
   echo "#########################"
-
-  # Provide a user warning that these images are old
-  echo ""
-  echo "################################################"
-  echo "NOTICE: YOU ARE USING AN OLD IMAGE VERSION!"
-  echo "PLEASE CONSIDER UPGRADING TO gvenzl/oracle-free!"
-  echo "################################################"
-
 else
   echo "############################################"
   echo "DATABASE STARTUP FAILED!"

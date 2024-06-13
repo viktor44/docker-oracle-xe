@@ -45,4 +45,4 @@ COPY --from=base "${ORACLE_BASE}"/"${ORACLE_SID}".7z "${ORACLE_BASE}"/"${ORACLE_
 RUN 7zzs x "${ORACLE_BASE}"/"${ORACLE_SID}".7z "${ORACLE_SID}/system*.dbf" -o"${ORACLE_BASE}"/oradata/ > /dev/null
 RUN rm "${ORACLE_SID}".7z
 
-LABEL org.opencontainers.image.source https://github.com/gvenzl/oci-oracle-xe
+LABEL org.opencontainers.image.source https://github.com/viktor44/docker-oracle-xe

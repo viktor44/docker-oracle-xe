@@ -98,7 +98,7 @@ FROM oracle_rdbms as db_files
 
 COPY --from=builder --chown=oracle:oinstall "${ORACLE_BASE}"/"${ORACLE_SID}".7z  "${ORACLE_BASE}"/
 
-LABEL org.opencontainers.image.source https://github.com/gvenzl/oci-oracle-xe
+LABEL org.opencontainers.image.source https://github.com/viktor44/docker-oracle-xe
 
 USER oracle
 WORKDIR ${ORACLE_BASE}

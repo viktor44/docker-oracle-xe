@@ -7,7 +7,7 @@ if ! command -v pwgen &> /dev/null; then
 fi
 
 CMG_COMMAND=docker
-DKR_IMAGE="gvenzl/oracle-xe"
+DKR_IMAGE="viktor44/oracle-xe"
 DKR_HOST_PORT=$1
 DKR_CNT_NAME=$2
 DKR_DATA_PATH=dbcxe-$DKR_CNT_NAME-dvol

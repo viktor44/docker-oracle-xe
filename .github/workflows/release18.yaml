@@ -2,10 +2,10 @@ name: Publish Docker image
 
 on:
   push:
-    branches:
-      - main
-#    tags:
-#      - 'v18*'
+#    branches:
+#      - main
+    tags:
+      - 'v18*'
 
 jobs:
   push_to_registry:
@@ -21,9 +21,9 @@ jobs:
       #     GITHUB_VAR: ${{ toJson(github) }}
       #   run: echo "$GITHUB_VAR"
 
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Download Oracle RPM
         run: |
@@ -46,13 +46,9 @@ jobs:
       - name: Build image
         run: |
           ./buildContainerImage.sh -i -v 18.4.0
-          docker images
 
       - name: Push image
         run: |
           docker push viktor44/oracle-xe:18.4.0 
           docker tag viktor44/oracle-xe:18.4.0 viktor44/oracle-xe:18
           docker push viktor44/oracle-xe:18
-#          buildah push viktor44/oracle-xe:18.4.0 
-#          buildah tag viktor44/oracle-xe:18.4.0 viktor44/oracle-xe:18
-#          buildah push viktor44/oracle-xe:18
