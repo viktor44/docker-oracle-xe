@@ -21,9 +21,9 @@ jobs:
       #     GITHUB_VAR: ${{ toJson(github) }}
       #   run: echo "$GITHUB_VAR"
 
-      - name: Exit if not on main branch
-        if: endsWith(github.event.base_ref, 'main') == false
-        run: exit -1
+#      - name: Exit if not on main branch
+#        if: endsWith(github.event.base_ref, 'main') == false
+#        run: exit -1
 
       - name: Download Oracle RPM
         run: |
