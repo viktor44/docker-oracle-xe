@@ -18,7 +18,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-FROM oraclelinux:8-slim as builder
+FROM oraclelinux:7-slim as builder
 
 ARG BUILD_MODE
 
