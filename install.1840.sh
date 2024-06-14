@@ -48,23 +48,21 @@ fi;
 
 echo "BUILDER: Installing OS dependencies"
 
-yum -y install microdnf
-
 # Install installation dependencies
-microdnf -y install bc binutils file elfutils-libelf ksh sysstat procps-ng smartmontools make net-tools hostname
+yum -y install bc binutils file elfutils-libelf ksh sysstat procps-ng smartmontools make net-tools hostname
 
 # Install runtime dependencies
-microdnf -y install libnsl glibc libaio libgcc libstdc++ xz
+yum -y install libnsl glibc libaio libgcc libstdc++ xz
 
 # Install fortran runtime for libora_netlib.so (so that the Intel Math Kernel libraries are no longer needed)
 if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
-  microdnf -y install compat-libgfortran-48
+  yum -y install compat-libgfortran-48
 fi;
 
 # Install container runtime specific packages
 # (used by the entrypoint script, not the database itself)
 # TODO: replace with 7zip
-microdnf -y install unzip gzip
+yum -y install unzip gzip
 
 # Install 7zip
 mkdir /tmp/7z
@@ -1222,7 +1220,7 @@ rpm -e --nodeps acl bc binutils cryptsetup-libs dbus dbus-common dbus-daemon \
 rm /etc/sysctl.conf.rpmsave
 
 # Remove dnf cache
-microdnf clean all
+yum clean all
 
 # Clean lastlog
 echo "" > /var/log/lastlog
