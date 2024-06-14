@@ -56,7 +56,7 @@ yum -y install libnsl glibc libaio libgcc libstdc++ xz
 
 # Install fortran runtime for libora_netlib.so (so that the Intel Math Kernel libraries are no longer needed)
 if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
-  yum -y install compat-libgfortran-48
+  yum -y install compat-libgfortran-41
 fi;
 
 # Install container runtime specific packages
