@@ -1128,8 +1128,8 @@ if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
 
   # Remove not needed packages
   # Use rpm instad of microdnf to allow removing packages regardless of their dependencies
-  rpm -e --nodeps glibc-devel glibc-headers kernel-headers libpkgconf libxcrypt-devel \
-                  pkgconf pkgconf-m4 pkgconf-pkg-config
+#  rpm -e --nodeps glibc-devel glibc-headers kernel-headers libpkgconf libxcrypt-devel \
+#                  pkgconf pkgconf-m4 pkgconf-pkg-config
 
   # Remove components from ORACLE_HOME
   if [ "${BUILD_MODE}" == "SLIM" ]; then
