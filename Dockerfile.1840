@@ -32,7 +32,7 @@ ENV ORACLE_BASE=/opt/oracle \
 
 COPY install.1840.sh container-entrypoint.sh resetPassword createAppUser healthcheck.sh /install/
 
-RUN curl -f -o /install/oracle-database-xe-18c-1.0-1.x86_64.rpm "https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm" \
+RUN curl -fL -o /install/oracle-database-xe-18c-1.0-1.x86_64.rpm "https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm" \
     && /install/install.1840.sh "${BUILD_MODE}" \
     && chown -R oracle:oinstall "${ORACLE_BASE}"
 
