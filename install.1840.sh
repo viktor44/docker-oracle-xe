@@ -48,7 +48,7 @@ fi;
 
 echo "BUILDER: Installing OS dependencies"
 
-yum -y install Microsoft
+yum -y install microdnf
 
 # Install installation dependencies
 microdnf -y install bc binutils file elfutils-libelf ksh sysstat procps-ng smartmontools make net-tools hostname
