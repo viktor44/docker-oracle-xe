@@ -310,7 +310,7 @@ EOF
 
      -- Deactivate Intel's Math Kernel Libraries
      -- Like with every underscore parameter, DO NOT SET THIS PARAMETER EVER UNLESS YOU KNOW WHAT THE HECK YOU ARE DOING!
-     ALTER SYSTEM SET "_dmm_blas_library"='libora_netlib.so' SCOPE=SPFILE;
+--     ALTER SYSTEM SET "_dmm_blas_library"='libora_netlib.so' SCOPE=SPFILE;
 
      -- Disable shared servers (enables faster shutdown)
      ALTER SYSTEM SET SHARED_SERVERS=0;
