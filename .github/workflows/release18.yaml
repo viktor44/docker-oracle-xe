@@ -25,9 +25,9 @@ jobs:
 #        if: endsWith(github.event.base_ref, 'main') == false
 #        run: exit -1
 
-      - name: Download Oracle RPM
-        run: |
-          wget --no-verbose --progress=bar:force:noscroll https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
+#      - name: Download Oracle RPM
+#        run: |
+#          wget --no-verbose --progress=bar:force:noscroll https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
