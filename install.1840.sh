@@ -55,9 +55,9 @@ yum -y install bc binutils file elfutils-libelf ksh sysstat procps-ng smartmonto
 yum -y install libnsl glibc libaio libgcc libstdc++ xz
 
 # Install fortran runtime for libora_netlib.so (so that the Intel Math Kernel libraries are no longer needed)
-if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
-  yum -y install compat-libgfortran-41
-fi;
+#if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
+#  yum -y install compat-libgfortran-48
+#fi;
 
 # Install container runtime specific packages
 # (used by the entrypoint script, not the database itself)
@@ -1036,7 +1036,7 @@ if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
   rm -r "${ORACLE_HOME}"/ucp
 
   # Remove Intel's Math kernel libraries
-  rm "${ORACLE_HOME}"/lib/libmkl_*
+  # rm "${ORACLE_HOME}"/lib/libmkl_*
 
   # Remove zip artifacts in $ORACLE_HOME/lib
   rm "${ORACLE_HOME}"/lib/*.zip
