@@ -30,28 +30,11 @@ ENV ORACLE_BASE=/opt/oracle \
     PATH=${PATH}:/opt/oracle/product/18c/dbhomeXE/bin:/opt/oracle \
     NLS_LANG=.AL32UTF8
 
-COPY oracle-database-xe-18c-1.0-1.x86_64.rpm install.1840.sh container-entrypoint.sh resetPassword createAppUser healthcheck.sh /install/
+COPY install.1840.sh container-entrypoint.sh resetPassword createAppUser healthcheck.sh /install/
 
-RUN /install/install.1840.sh "${BUILD_MODE}"
-
-##########################################################################################
-### Layer 1 --> Core OS
-##########################################################################################
-
-FROM scratch as os_layer
-
-# Redefine environment variables, etc. as we copied everything from an empty image (scratch)
-ENV ORACLE_BASE=/opt/oracle \
-    ORACLE_BASE_CONFIG=/opt/oracle/product/18c/dbhomeXE \
-    ORACLE_BASE_HOME=/opt/oracle/product/18c/dbhomeXE \
-    ORACLE_HOME=/opt/oracle/product/18c/dbhomeXE \
-    ORACLE_SID=XE \
-    PATH=${PATH}:/opt/oracle/product/18c/dbhomeXE/bin:/opt/oracle \
-    NLS_LANG=.AL32UTF8
-
-COPY --from=builder / /
-
-RUN chown -R oracle:oinstall "${ORACLE_BASE}"
+RUN wget --no-verbose --progress=bar:force:noscroll https://download.oracle.com/otn-pub/otn_software/db-express/oracle-database-xe-18c-1.0-1.x86_64.rpm \
+    && /install/install.1840.sh "${BUILD_MODE}" \
+    && chown -R oracle:oinstall "${ORACLE_BASE}"
 
 LABEL org.opencontainers.image.source https://github.com/viktor44/docker-oracle-xe
 
