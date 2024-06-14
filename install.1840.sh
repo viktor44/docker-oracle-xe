@@ -1224,7 +1224,7 @@ rpm -e --nodeps acl bc binutils cryptsetup-libs dbus \
                 make net-tools procps-ng smartmontools sysstat systemd \
                 util-linux xz
 
-rm /etc/sysctl.conf.rpmsave
+# rm /etc/sysctl.conf.rpmsave
 
 # Remove dnf cache
 yum clean all
