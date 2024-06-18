@@ -8,8 +8,8 @@ on:
 #      - 'v18*'
 
 jobs:
-  push_to_registry:
-    name: Build Oracle XE 18
+  Regular:
+    name: Build Oracle XE 18 (Regular)
     runs-on: ubuntu-latest
     environment: Release
     steps:
@@ -52,3 +52,39 @@ jobs:
           docker push viktor44/oracle-xe:18.4.0 
           docker tag viktor44/oracle-xe:18.4.0 viktor44/oracle-xe:18
           docker push viktor44/oracle-xe:18
+
+  Full:
+    name: Build Oracle XE 18 (Full)
+    runs-on: ubuntu-latest
+    environment: Release
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+#      - name: Exit if not on main branch
+#        if: endsWith(github.event.base_ref, 'main') == false
+#        run: exit -1
+
+      - name: Extract metadata (tags, labels) for Docker
+        id: meta
+        uses: docker/metadata-action@v5
+        with:
+          images: viktor44/oracle-xe
+          tags: |
+            type=semver,pattern={{version}}
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build image
+        run: |
+          ./buildContainerImage.sh -i -f -v 18.4.0
+
+      - name: Push image
+        run: |
+          docker push viktor44/oracle-xe:18.4.0-full
+          docker tag viktor44/oracle-xe:18.4.0-full viktor44/oracle-xe:18-full
+          docker push viktor44/oracle-xe:18-full
