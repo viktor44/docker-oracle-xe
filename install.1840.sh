@@ -59,6 +59,11 @@ yum -y install libnsl glibc libaio libgcc libstdc++ xz
 #  yum -y install compat-libgfortran-48
 #fi;
 
+# Disable IPV6
+echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
+echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.conf
+sysctl -p
+
 # Install container runtime specific packages
 # (used by the entrypoint script, not the database itself)
 # TODO: replace with 7zip
@@ -121,7 +126,7 @@ echo \
   (DESCRIPTION_LIST =
     (DESCRIPTION =
       (ADDRESS = (PROTOCOL = IPC)(KEY = EXTPROC_FOR_${ORACLE_SID}))
-      (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521)(IP=V4_ONLY))
+      (ADDRESS = (PROTOCOL = TCP)(HOST = 0.0.0.0)(PORT = 1521))
     )
   )
 
