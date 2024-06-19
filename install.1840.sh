@@ -49,15 +49,15 @@ fi;
 echo "BUILDER: Installing OS dependencies"
 
 # Install installation dependencies
-yum -y install bc binutils file elfutils-libelf ksh sysstat procps-ng smartmontools make net-tools hostname
+microdnf -y install bc binutils file elfutils-libelf ksh sysstat procps-ng smartmontools make net-tools hostname
 
 # Install runtime dependencies
-yum -y install libnsl glibc libaio libgcc libstdc++ xz
+microdnf -y install libnsl glibc libaio libgcc libstdc++ xz
 
 # Install fortran runtime for libora_netlib.so (so that the Intel Math Kernel libraries are no longer needed)
-#if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
-#  yum -y install compat-libgfortran-48
-#fi;
+if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
+  microdnf -y install compat-libgfortran-48
+fi;
 
 # Disable IPV6
 echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
@@ -67,7 +67,7 @@ sysctl -p
 # Install container runtime specific packages
 # (used by the entrypoint script, not the database itself)
 # TODO: replace with 7zip
-yum -y install unzip gzip
+microdnf -y install unzip gzip
 
 # Install 7zip
 mkdir /tmp/7z
@@ -1133,8 +1133,8 @@ if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
 
   # Remove not needed packages
   # Use rpm instad of microdnf to allow removing packages regardless of their dependencies
-#  rpm -e --nodeps glibc-devel glibc-headers kernel-headers libpkgconf libxcrypt-devel \
-#                  pkgconf pkgconf-m4 pkgconf-pkg-config
+  rpm -e --nodeps glibc-devel glibc-headers kernel-headers libpkgconf libxcrypt-devel \
+                  pkgconf pkgconf-m4 pkgconf-pkg-config
 
   # Remove components from ORACLE_HOME
   if [ "${BUILD_MODE}" == "SLIM" ]; then
@@ -1215,24 +1215,17 @@ fi;
 
 # Remove installation dependencies
 # Use rpm instead of microdnf to allow removing packages regardless of dependencies specified by the Oracle XE RPM
-#rpm -e --nodeps acl bc binutils cryptsetup-libs dbus dbus-common dbus-daemon \
-#                dbus-libs dbus-tools device-mapper device-mapper-libs diffutils \
-#                elfutils-default-yama-scope elfutils-libs file findutils hostname \
-#                kmod-libs ksh libfdisk libseccomp libutempter lm_sensors-libs \
-#                make net-tools procps-ng smartmontools sysstat systemd \
-#                systemd-pam util-linux xz
+rpm -e --nodeps acl bc binutils cryptsetup-libs dbus dbus-common dbus-daemon \
+               dbus-libs dbus-tools device-mapper device-mapper-libs diffutils \
+               elfutils-default-yama-scope elfutils-libs file findutils hostname \
+               kmod-libs ksh libfdisk libseccomp libutempter lm_sensors-libs \
+               make net-tools procps-ng smartmontools sysstat systemd \
+               systemd-pam util-linux xz
 
-rpm -e --nodeps acl bc binutils cryptsetup-libs dbus \
-                dbus-libs device-mapper device-mapper-libs diffutils \
-                elfutils-default-yama-scope elfutils-libs file findutils hostname \
-                kmod-libs ksh libutempter lm_sensors-libs \
-                make net-tools procps-ng smartmontools sysstat systemd \
-                util-linux xz
-
-# rm /etc/sysctl.conf.rpmsave
+rm /etc/sysctl.conf.rpmsave
 
 # Remove dnf cache
-yum clean all
+microdnf clean all
 
 # Clean lastlog
 echo "" > /var/log/lastlog
