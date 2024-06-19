@@ -315,7 +315,7 @@ EOF
 
      -- Deactivate Intel's Math Kernel Libraries
      -- Like with every underscore parameter, DO NOT SET THIS PARAMETER EVER UNLESS YOU KNOW WHAT THE HECK YOU ARE DOING!
---     ALTER SYSTEM SET "_dmm_blas_library"='libora_netlib.so' SCOPE=SPFILE;
+     ALTER SYSTEM SET "_dmm_blas_library"='libora_netlib.so' SCOPE=SPFILE;
 
      -- Disable shared servers (enables faster shutdown)
      ALTER SYSTEM SET SHARED_SERVERS=0;
@@ -1041,7 +1041,7 @@ if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
   rm -r "${ORACLE_HOME}"/ucp
 
   # Remove Intel's Math kernel libraries
-  # rm "${ORACLE_HOME}"/lib/libmkl_*
+  rm "${ORACLE_HOME}"/lib/libmkl_*
 
   # Remove zip artifacts in $ORACLE_HOME/lib
   rm "${ORACLE_HOME}"/lib/*.zip
