@@ -59,11 +59,6 @@ if [ "${BUILD_MODE}" == "REGULAR" ] || [ "${BUILD_MODE}" == "SLIM" ]; then
   microdnf -y install compat-libgfortran-48
 fi;
 
-# Disable IPV6
-echo "net.ipv6.conf.all.disable_ipv6 = 1" >> /etc/sysctl.conf
-echo "net.ipv6.conf.default.disable_ipv6 = 1" >> /etc/sysctl.conf
-sysctl -p
-
 # Install container runtime specific packages
 # (used by the entrypoint script, not the database itself)
 # TODO: replace with 7zip
@@ -1216,11 +1211,11 @@ fi;
 # Remove installation dependencies
 # Use rpm instead of microdnf to allow removing packages regardless of dependencies specified by the Oracle XE RPM
 rpm -e --nodeps acl bc binutils cryptsetup-libs dbus dbus-common dbus-daemon \
-               dbus-libs dbus-tools device-mapper device-mapper-libs diffutils \
-               elfutils-default-yama-scope elfutils-libs file findutils hostname \
-               kmod-libs ksh libfdisk libseccomp libutempter lm_sensors-libs \
-               make net-tools procps-ng smartmontools sysstat systemd \
-               systemd-pam util-linux xz
+                dbus-libs dbus-tools device-mapper device-mapper-libs diffutils \
+                elfutils-default-yama-scope elfutils-libs file findutils hostname \
+                kmod-libs ksh libfdisk libseccomp libutempter lm_sensors-libs \
+                make net-tools procps-ng smartmontools sysstat systemd \
+                systemd-pam util-linux xz
 
 rm /etc/sysctl.conf.rpmsave
 
