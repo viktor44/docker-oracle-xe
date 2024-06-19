@@ -123,6 +123,7 @@ jobs:
 
   Slim_Faststart:
     name: Build Oracle XE 18 (Slim Faststart)
+    needs: Slim
     runs-on: ubuntu-latest
     environment: Release
     steps:
