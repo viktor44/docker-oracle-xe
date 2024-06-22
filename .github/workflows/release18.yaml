@@ -2,10 +2,10 @@ name: Publish Docker image
 
 on:
   push:
-    branches:
-      - main
-#    tags:
-#      - 'v18*'
+#    branches:
+#      - main
+    tags:
+      - 'v18*'
 
 jobs:
   Regular:
@@ -21,9 +21,9 @@ jobs:
       #     GITHUB_VAR: ${{ toJson(github) }}
       #   run: echo "$GITHUB_VAR"
 
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -58,9 +58,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -94,9 +94,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -131,9 +131,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -167,9 +167,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
@@ -204,9 +204,9 @@ jobs:
       - name: Check out the repo
         uses: actions/checkout@v4
       
-#      - name: Exit if not on main branch
-#        if: endsWith(github.event.base_ref, 'main') == false
-#        run: exit -1
+      - name: Exit if not on main branch
+        if: endsWith(github.event.base_ref, 'main') == false
+        run: exit -1
 
       - name: Extract metadata (tags, labels) for Docker
         id: meta
