@@ -1,0 +1,37 @@
+name: Publish Oracle 21 Docker Image
+
+on:
+  push:
+    branches:
+      - main
+    # tags:
+    #   - 'v21*'
+
+jobs:
+  Regular:
+    name: Build Oracle XE 21 (Regular)
+    runs-on: ubuntu-latest
+    environment: Release
+    steps:
+      - name: Check out the repo
+        uses: actions/checkout@v4
+      
+      # - name: Exit if not on main branch
+      #   if: endsWith(github.event.base_ref, 'main') == false
+      #   run: exit -1
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKER_USERNAME }}
+          password: ${{ secrets.DOCKER_TOKEN }}
+
+      - name: Build image
+        run: |
+          ./buildContainerImage.sh -i -v 21.3.0
+
+      - name: Push image
+        run: |
+          docker push viktor44/oracle-xe:21.3.0 
+          docker tag viktor44/oracle-xe:21.3.0 viktor44/oracle-xe:21
+          docker push viktor44/oracle-xe:21
