@@ -1,0 +1,48 @@
+#
+# Since: January, 2021
+# Author: viktor44
+# Name: Dockerfile.1930
+# Description: Dockerfile to build Oracle DB EE 19.3.0
+#
+# Copyright 2024 Viktor44
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
+FROM oraclelinux:8-slim
+
+ARG DISTR_BASE_URL
+ARG BUILD_MODE
+
+ENV ORACLE_BASE=/opt/oracle \
+    ORACLE_BASE_CONFIG=/opt/oracle/product/19c/dbhome \
+    ORACLE_BASE_HOME=/opt/oracle/product/19c/dbhome \
+    ORACLE_HOME=/opt/oracle/product/19c/dbhome \
+    ORACLE_SID=ORCLCDB \
+    PATH=${PATH}:/opt/oracle/product/19c/dbhome/bin:/opt/oracle \
+    NLS_LANG=.AL32UTF8
+
+# COPY oracle-database-ee-19c-1.0-1.x86_64.rpm install.1930.sh container-entrypoint.sh resetPassword createAppUser healthcheck.sh /install/
+COPY oracle-database-ee-19c-1.0-1.x86_64.rpm install.1930.sh container-entrypoint.sh resetPassword createAppUser healthcheck.sh /install/
+
+RUN curl -fL -o /install/oracle-database-xe-18c-1.0-1.x86_64.rpm "${DISTR_BASE_URL}/oracle-database-ee-19c-1.0-1.x86_64.rpm" \
+    && /install/install.1930.sh "${BUILD_MODE}" \
+    && chown -R oracle:oinstall "${ORACLE_BASE}"
+
+LABEL org.opencontainers.image.source https://github.com/viktor44/docker-oracle-xe
+
+USER oracle
+WORKDIR ${ORACLE_BASE}
+
+HEALTHCHECK CMD "${ORACLE_BASE}"/healthcheck.sh >/dev/null || exit 1
+
+ENTRYPOINT ["container-entrypoint.sh"]

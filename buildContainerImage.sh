@@ -134,7 +134,10 @@ echo "BUILDER: building image $IMAGE_NAME"
 
 BUILD_START_TMS=$(date '+%s')
 
-docker build -f "$DOCKER_FILE" -t "${IMAGE_NAME}" --build-arg BUILD_MODE="${FLAVOR}" --build-arg BASE_IMAGE="${BASE_IMAGE}" .
+docker build -f "$DOCKER_FILE" -t "${IMAGE_NAME}" \
+    --build-arg BUILD_MODE="${FLAVOR}" \
+    --build-arg BASE_IMAGE="${BASE_IMAGE}" \
+    --build-arg DISTR_BASE_URL="${DISTR_BASE_URL}" .
 
 BUILD_END_TMS=$(date '+%s')
 BUILD_DURATION=$(( BUILD_END_TMS - BUILD_START_TMS ))
