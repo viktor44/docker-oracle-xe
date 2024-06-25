@@ -2,10 +2,10 @@ name: Publish Oracle 21 Docker Image
 
 on:
   push:
-    branches:
-      - main
-    # tags:
-    #   - 'v21*'
+    # branches:
+    #   - main
+    tags:
+      - 'v21*'
 
 jobs:
   Regular:
