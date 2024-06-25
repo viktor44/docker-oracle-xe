@@ -1,4 +1,4 @@
-name: Publish Oracle 18 Docker Image
+name: Publish Oracle 19 Docker Image
 
 on:
   push:
