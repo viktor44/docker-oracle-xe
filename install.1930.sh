@@ -82,7 +82,7 @@ rpm -iv --nodeps /install/oracle-database-ee-19c-1.0-1.x86_64.rpm
 usermod -d ${ORACLE_BASE} oracle
 
 # Add listener port and skip validations to conf file
-sed -i "s/LISTENER_PORT=/LISTENER_PORT=1521/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
+# sed -i "s/LISTENER_PORT=/LISTENER_PORT=1521/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
 sed -i "s/SKIP_VALIDATIONS=false/SKIP_VALIDATIONS=true/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
 
 # Disable netca to avoid "No IP address found" issue
