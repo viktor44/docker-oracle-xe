@@ -24,11 +24,11 @@ ARG DISTR_BASE_URL
 ARG BUILD_MODE
 
 ENV ORACLE_BASE=/opt/oracle \
-    ORACLE_BASE_CONFIG=/opt/oracle/product/19c/dbhome \
-    ORACLE_BASE_HOME=/opt/oracle/product/19c/dbhome \
-    ORACLE_HOME=/opt/oracle/product/19c/dbhome \
+    ORACLE_BASE_CONFIG=/opt/oracle/product/19c/dbhome_1 \
+    ORACLE_BASE_HOME=/opt/oracle/product/19c/dbhome_1 \
+    ORACLE_HOME=/opt/oracle/product/19c/dbhome_1 \
     ORACLE_SID=ORCLCDB \
-    PATH=${PATH}:/opt/oracle/product/19c/dbhome/bin:/opt/oracle \
+    PATH=${PATH}:/opt/oracle/product/19c/dbhome_1/bin:/opt/oracle \
     NLS_LANG=.AL32UTF8
 
 # COPY oracle-database-ee-19c-1.0-1.x86_64.rpm install.1930.sh container-entrypoint.sh resetPassword createAppUser healthcheck.sh /install/
