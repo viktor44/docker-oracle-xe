@@ -82,8 +82,9 @@ rpm -iv --nodeps /install/oracle-database-ee-19c-1.0-1.x86_64.rpm
 usermod -d ${ORACLE_BASE} oracle
 
 # Add listener port and skip validations to conf file
-# sed -i "s/LISTENER_PORT=/LISTENER_PORT=1521/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
-sed -i "s/SKIP_VALIDATIONS=false/SKIP_VALIDATIONS=true/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
+#sed -i "s/LISTENER_PORT=/LISTENER_PORT=1521/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
+#sed -i "s/SKIP_VALIDATIONS=false/SKIP_VALIDATIONS=true/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
+echo "SKIP_VALIDATIONS=true" >> /etc/sysconfig/oracledb_ORCLCDB-19c.conf
 
 # Disable netca to avoid "No IP address found" issue
 mv "${ORACLE_HOME}"/bin/netca "${ORACLE_HOME}"/bin/netca.bak
@@ -92,6 +93,17 @@ chmod a+x "${ORACLE_HOME}"/bin/netca
 
 echo "BUILDER: configuring database"
 
+# Set random password
+ORACLE_PASSWORD=$(date '+%s' | sha256sum | base64 | head -c 8)
+(echo "${ORACLE_PASSWORD}"; echo "${ORACLE_PASSWORD}";) | /etc/init.d/oracledb_ORCLCDB-19c configure 
+
+# Stop unconfigured listener
+su -p oracle -c "lsnrctl stop"
+
+# Re-enable netca
+mv "${ORACLE_HOME}"/bin/netca.bak "${ORACLE_HOME}"/bin/netca
+
+echo "BUILDER: post config database steps"
 
 ############################
 ### Create network files ###
@@ -165,22 +177,6 @@ EXTPROC_CONNECTION_DATA =
 echo "NAMES.DIRECTORY_PATH = (EZCONNECT, TNSNAMES)" > "${ORACLE_HOME}"/network/admin/sqlnet.ora
 
 chown -R oracle:dba "${ORACLE_HOME}"/network/admin
-
-
-# --------------------------------
-
-
-# Set random password
-ORACLE_PASSWORD=$(date '+%s' | sha256sum | base64 | head -c 8)
-(echo "${ORACLE_PASSWORD}"; echo "${ORACLE_PASSWORD}";) | /etc/init.d/oracledb_ORCLCDB-19c configure 
-
-# Stop unconfigured listener
-su -p oracle -c "lsnrctl stop"
-
-# Re-enable netca
-mv "${ORACLE_HOME}"/bin/netca.bak "${ORACLE_HOME}"/bin/netca
-
-echo "BUILDER: post config database steps"
 
 # Start listener
 su -p oracle -c "lsnrctl start"
