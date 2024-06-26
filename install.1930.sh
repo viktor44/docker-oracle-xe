@@ -92,17 +92,6 @@ chmod a+x "${ORACLE_HOME}"/bin/netca
 
 echo "BUILDER: configuring database"
 
-# Set random password
-ORACLE_PASSWORD=$(date '+%s' | sha256sum | base64 | head -c 8)
-(echo "${ORACLE_PASSWORD}"; echo "${ORACLE_PASSWORD}";) | /etc/init.d/oracledb_ORCLCDB-19c configure 
-
-# Stop unconfigured listener
-su -p oracle -c "lsnrctl stop"
-
-# Re-enable netca
-mv "${ORACLE_HOME}"/bin/netca.bak "${ORACLE_HOME}"/bin/netca
-
-echo "BUILDER: post config database steps"
 
 ############################
 ### Create network files ###
@@ -176,6 +165,22 @@ EXTPROC_CONNECTION_DATA =
 echo "NAMES.DIRECTORY_PATH = (EZCONNECT, TNSNAMES)" > "${ORACLE_HOME}"/network/admin/sqlnet.ora
 
 chown -R oracle:dba "${ORACLE_HOME}"/network/admin
+
+
+# --------------------------------
+
+
+# Set random password
+ORACLE_PASSWORD=$(date '+%s' | sha256sum | base64 | head -c 8)
+(echo "${ORACLE_PASSWORD}"; echo "${ORACLE_PASSWORD}";) | /etc/init.d/oracledb_ORCLCDB-19c configure 
+
+# Stop unconfigured listener
+su -p oracle -c "lsnrctl stop"
+
+# Re-enable netca
+mv "${ORACLE_HOME}"/bin/netca.bak "${ORACLE_HOME}"/bin/netca
+
+echo "BUILDER: post config database steps"
 
 # Start listener
 su -p oracle -c "lsnrctl start"
