@@ -86,9 +86,9 @@ usermod -d ${ORACLE_BASE} oracle
 sed -i "s/SKIP_VALIDATIONS=false/SKIP_VALIDATIONS=true/g" /etc/sysconfig/oracledb_ORCLCDB-19c.conf
 
 # Disable netca to avoid "No IP address found" issue
-#mv "${ORACLE_HOME}"/bin/netca "${ORACLE_HOME}"/bin/netca.bak
-#echo "exit 0" > "${ORACLE_HOME}"/bin/netca
-#chmod a+x "${ORACLE_HOME}"/bin/netca
+mv "${ORACLE_HOME}"/bin/netca "${ORACLE_HOME}"/bin/netca.bak
+echo "exit 0" > "${ORACLE_HOME}"/bin/netca
+chmod a+x "${ORACLE_HOME}"/bin/netca
 
 echo "BUILDER: configuring database"
 
